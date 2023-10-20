@@ -26,6 +26,21 @@ describe("When the user requests the records for a specific payment", () => {
 
     expect(getPaymentMock).toHaveBeenCalledWith(paymentId);
   });
+
+  it("Returns 404 if payment id is not found", async () => {
+    const paymentId = randomUUID();
+    // no match
+    jest.spyOn(payments, "getPayment").mockResolvedValueOnce(null);
+
+    const result = await handler({
+      pathParameters: {
+        id: paymentId,
+      },
+    } as unknown as APIGatewayProxyEvent);
+
+    expect(result.statusCode).toBe(404);
+    expect(result.body).toEqual("");
+  });
 });
 
 afterEach(() => {

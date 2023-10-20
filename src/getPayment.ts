@@ -12,5 +12,7 @@ export const handler = async (
   }
 
   const payment = await getPayment(id);
-  return buildResponse(200, { ...payment });
+  return payment
+    ? buildResponse(200, { ...payment })
+    : { statusCode: 404, body: "" };
 };

@@ -1,6 +1,6 @@
-import * as payments from '../src/lib/payments';
+import * as payments from 'lib/payments';
 import * as crypto from 'crypto';
-import { handler } from '../src/createPayment';
+import { handler } from 'src/createPayment';
 import createEvent from 'mock-aws-events';
 
 describe('When the user creates a new payment', () => {

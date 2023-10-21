@@ -1,8 +1,8 @@
 import * as crypto from 'crypto';
 import createEvent from 'mock-aws-events';
-import { handler as createPaymentHandler } from '../../src/createPayment';
-import { getPayment } from '../../src/lib/payments';
-import { handler } from '../../src/getPayment';
+import { handler as createPaymentHandler } from 'src/createPayment';
+import { getPayment } from 'lib/payments';
+import { handler } from 'src/getPayment';
 
 describe('When the user requests the records for a specific payment', () => {
   afterEach(() => {

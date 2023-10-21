@@ -1,5 +1,5 @@
 import { CreateTableCommand, DeleteTableCommand } from '@aws-sdk/client-dynamodb';
-import { DynamoDB } from '../../src/lib/dynamodb';
+import { DynamoDB } from 'lib/dynamodb';
 
 beforeEach(async () => {
   await DynamoDB.send(

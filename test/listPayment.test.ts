@@ -1,6 +1,6 @@
-import * as payments from '../src/lib/payments';
+import * as payments from 'lib/payments';
 import { randomUUID } from 'crypto';
-import { handler } from '../src/listPayments';
+import { handler } from 'src/listPayments';
 import createEvent from 'mock-aws-events';
 
 describe('When the user requests for a list of payments', () => {

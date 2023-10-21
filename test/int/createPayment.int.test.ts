@@ -1,7 +1,7 @@
 import * as crypto from 'crypto';
 import createEvent from 'mock-aws-events';
-import { handler } from '../../src/createPayment';
-import { getPayment } from '../../src/lib/payments';
+import { handler } from 'src/createPayment';
+import { getPayment } from 'lib/payments';
 
 describe('When the user creates a new payment', () => {
   it('a new payment is created in the db', async () => {

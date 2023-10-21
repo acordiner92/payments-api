@@ -1,7 +1,7 @@
 import createEvent from 'mock-aws-events';
 import * as crypto from 'crypto';
-import { handler as createPaymentHandler } from '../../src/createPayment';
-import { handler } from '../../src/listPayments';
+import { handler as createPaymentHandler } from 'src/createPayment';
+import { handler } from 'src/listPayments';
 
 describe('When the user requests for a list of payments', () => {
   afterEach(() => jest.clearAllMocks());

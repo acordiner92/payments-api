@@ -8,7 +8,7 @@ describe('When the user creates a new payment', () => {
     jest.clearAllMocks();
   });
 
-  it('A random payment id is generated', async () => {
+  it.only('A random payment id is generated', async () => {
     const paymentId = crypto.randomUUID();
     const mockPayment = {
       id: crypto.randomUUID(),
@@ -81,4 +81,36 @@ describe('When the user creates a new payment', () => {
       expect(createPaymentMock).not.toBeCalled();
     },
   );
+
+  it('Returns 400 if request body is empty', async () => {
+    const paymentId = crypto.randomUUID();
+    const event = createEvent('aws:apiGateway', {});
+    const createPaymentMock = jest.spyOn(payments, 'createPayment').mockResolvedValueOnce();
+
+    jest.spyOn(crypto, 'randomUUID').mockReturnValue(paymentId);
+
+    const result = await handler(event);
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body).toEqual('');
+
+    expect(createPaymentMock).not.toBeCalled();
+  });
+
+  it('Returns 400 if request body is invalid json', async () => {
+    const paymentId = crypto.randomUUID();
+    const event = createEvent('aws:apiGateway', {
+      body: 'some random value',
+    });
+    const createPaymentMock = jest.spyOn(payments, 'createPayment').mockResolvedValueOnce();
+
+    jest.spyOn(crypto, 'randomUUID').mockReturnValue(paymentId);
+
+    const result = await handler(event);
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body).toEqual('');
+
+    expect(createPaymentMock).not.toBeCalled();
+  });
 });

@@ -14,11 +14,18 @@ export const buildResponse = (
   };
 };
 
-export const parseInput = (body: string): unknown => {
+type Result = { success: true; result: unknown } | { success: false; error: unknown };
+
+export const parseJsonSafe = (body: string): Result => {
   try {
-    return JSON.parse(body);
+    return {
+      success: true,
+      result: JSON.parse(body),
+    };
   } catch (err) {
-    console.error(err);
-    return {};
+    return {
+      success: false,
+      error: err,
+    };
   }
 };

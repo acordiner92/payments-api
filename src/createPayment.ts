@@ -16,10 +16,7 @@ export const handler = async (
   const result = PaymentRequest.safeParse(parseInput(event.body || "{}"));
 
   if (!result.success) {
-    return {
-      statusCode: 422,
-      body: "",
-    };
+    return buildResponse(422);
   }
 
   await createPayment({ ...result.data, id: paymentId });

@@ -1,9 +1,13 @@
 import * as payments from "../src/lib/payments";
 import { randomUUID } from "crypto";
 import { handler } from "../src/listPayments";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import createEvent from "mock-aws-events";
 
 describe("When the user requests for a list of payments", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("All payments are returned if no query parameters are provided", async () => {
     const mockPayments = [
       {
@@ -21,7 +25,9 @@ describe("When the user requests for a list of payments", () => {
       .spyOn(payments, "listPayments")
       .mockResolvedValueOnce(mockPayments);
 
-    const result = await handler({} as unknown as APIGatewayProxyEvent);
+    const event = createEvent("aws:apiGateway", {});
+
+    const result = await handler(event);
 
     expect(result.statusCode).toBe(200);
     expect(JSON.parse(result.body).data).toStrictEqual(mockPayments);
@@ -46,19 +52,17 @@ describe("When the user requests for a list of payments", () => {
       .spyOn(payments, "listPayments")
       .mockResolvedValueOnce([mockPayments[0]]);
 
-    const result = await handler({
+    const event = createEvent("aws:apiGateway", {
       queryStringParameters: {
         currency: "SGD",
       },
-    } as unknown as APIGatewayProxyEvent);
+    });
+
+    const result = await handler(event);
 
     expect(result.statusCode).toBe(200);
     expect(JSON.parse(result.body).data).toStrictEqual([mockPayments[0]]);
 
     expect(listPaymentMock).toHaveBeenCalledWith("SGD");
   });
-});
-
-afterEach(() => {
-  jest.resetAllMocks();
 });

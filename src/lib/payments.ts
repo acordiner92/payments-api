@@ -13,7 +13,7 @@ export const getPayment = async (
     })
   );
 
-  return (result.Item as Payment) || null;
+  return (result.Item as Payment) ?? null;
 };
 
 export const listPayments = async (currency?: string): Promise<Payment[]> => {
@@ -29,10 +29,10 @@ export const listPayments = async (currency?: string): Promise<Payment[]> => {
     })
   );
 
-  return (result.Items as Payment[]) || [];
+  return (result.Items ?? []) as Payment[];
 };
 
-export const createPayment = async (payment: Payment) => {
+export const createPayment = async (payment: Payment): Promise<void> => {
   await DocumentClient.send(
     new PutCommand({
       TableName: "Payments",

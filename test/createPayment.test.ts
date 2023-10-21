@@ -1,9 +1,13 @@
 import * as payments from "../src/lib/payments";
 import * as crypto from "crypto";
 import { handler } from "../src/createPayment";
-import { APIGatewayProxyEvent } from "aws-lambda";
+import createEvent from "mock-aws-events";
 
 describe("When the user creates a new payment", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("A random payment id is generated", async () => {
     const paymentId = crypto.randomUUID();
     const mockPayment = {
@@ -11,15 +15,17 @@ describe("When the user creates a new payment", () => {
       currency: "AUD",
       amount: 2000,
     };
+    const event = createEvent("aws:apiGateway", {
+      body: JSON.stringify(mockPayment),
+    });
+
     const createPaymentMock = jest
       .spyOn(payments, "createPayment")
       .mockResolvedValueOnce();
 
     jest.spyOn(crypto, "randomUUID").mockReturnValue(paymentId);
 
-    const result = await handler({
-      body: JSON.stringify(mockPayment),
-    } as unknown as APIGatewayProxyEvent);
+    const result = await handler(event);
 
     expect(result.statusCode).toBe(201);
     expect(JSON.parse(result.body).result).toEqual(paymentId);
@@ -38,15 +44,16 @@ describe("When the user creates a new payment", () => {
       currency: 123,
       amount: 2000,
     };
+    const event = createEvent("aws:apiGateway", {
+      body: JSON.stringify(mockPayment),
+    });
     const createPaymentMock = jest
       .spyOn(payments, "createPayment")
       .mockResolvedValueOnce();
 
     jest.spyOn(crypto, "randomUUID").mockReturnValue(paymentId);
 
-    const result = await handler({
-      body: JSON.stringify(mockPayment),
-    } as unknown as APIGatewayProxyEvent);
+    const result = await handler(event);
 
     expect(result.statusCode).toBe(422);
     expect(result.body).toEqual("");
@@ -63,15 +70,16 @@ describe("When the user creates a new payment", () => {
         currency: "AUD",
         amount,
       };
+      const event = createEvent("aws:apiGateway", {
+        body: JSON.stringify(mockPayment),
+      });
       const createPaymentMock = jest
         .spyOn(payments, "createPayment")
         .mockResolvedValueOnce();
 
       jest.spyOn(crypto, "randomUUID").mockReturnValue(paymentId);
 
-      const result = await handler({
-        body: JSON.stringify(mockPayment),
-      } as unknown as APIGatewayProxyEvent);
+      const result = await handler(event);
 
       expect(result.statusCode).toBe(422);
       expect(result.body).toEqual("");
@@ -79,8 +87,4 @@ describe("When the user creates a new payment", () => {
       expect(createPaymentMock).not.toBeCalled();
     }
   );
-});
-
-afterEach(() => {
-  jest.resetAllMocks();
 });

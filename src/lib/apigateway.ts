@@ -14,7 +14,7 @@ export const buildResponse = (
   };
 };
 
-export const parseInput = (body: string): Unknown => {
+export const parseInput = (body: string): unknown => {
   try {
     return JSON.parse(body);
   } catch (err) {

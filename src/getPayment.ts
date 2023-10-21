@@ -6,7 +6,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const id = event.pathParameters?.id;
 
   if (!id) {
-    throw Error('TODO: handle this case');
+    return buildResponse(400);
   }
 
   const payment = await getPayment(id);

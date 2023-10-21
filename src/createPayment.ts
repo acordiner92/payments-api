@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { buildResponse, parseJsonSafe } from './lib/apigateway';
+import { buildResponse, safeParseJson } from './lib/apigateway';
 import { createPayment } from './lib/payments';
 import { randomUUID } from 'crypto';
 import { z } from 'zod';
@@ -14,7 +14,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     return buildResponse(400);
   }
 
-  const parsedJsonResult = parseJsonSafe(event.body);
+  const parsedJsonResult = safeParseJson(event.body);
   if (!parsedJsonResult.success) {
     return buildResponse(400);
   }
@@ -27,5 +27,5 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
 
   await createPayment({ ...result.data, id: paymentId });
-  return buildResponse(201, { result: paymentId });
+  return buildResponse(201, { id: paymentId });
 };

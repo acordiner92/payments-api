@@ -8,7 +8,7 @@ describe('When the user creates a new payment', () => {
     jest.clearAllMocks();
   });
 
-  it.only('A random payment id is generated', async () => {
+  it('A random payment id is generated', async () => {
     const paymentId = crypto.randomUUID();
     const mockPayment = {
       id: crypto.randomUUID(),
@@ -26,7 +26,7 @@ describe('When the user creates a new payment', () => {
     const result = await handler(event);
 
     expect(result.statusCode).toBe(201);
-    expect(JSON.parse(result.body).result).toEqual(paymentId);
+    expect(JSON.parse(result.body).data.id).toEqual(paymentId);
 
     expect(createPaymentMock).toHaveBeenCalledWith({
       id: paymentId,

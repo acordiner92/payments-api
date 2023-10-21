@@ -26,7 +26,7 @@ describe('When the user requests the records for a specific payment', () => {
     const result = await handler(event);
 
     expect(result.statusCode).toBe(200);
-    expect(JSON.parse(result.body)).toEqual(mockPayment);
+    expect(JSON.parse(result.body).data).toEqual(mockPayment);
 
     expect(getPaymentMock).toHaveBeenCalledWith(paymentId);
   });

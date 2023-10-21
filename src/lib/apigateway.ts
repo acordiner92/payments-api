@@ -2,11 +2,11 @@ import { APIGatewayProxyResult } from 'aws-lambda';
 
 export const buildResponse = (
   statusCode: number,
-  body?: Record<string, unknown>,
+  body?: Record<string, unknown> | Record<string, unknown>[],
 ): APIGatewayProxyResult => {
   return {
     statusCode,
-    body: body ? JSON.stringify(body) : '',
+    body: body ? JSON.stringify({ data: body }) : '',
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
@@ -16,7 +16,7 @@ export const buildResponse = (
 
 type Result = { success: true; result: unknown } | { success: false; error: unknown };
 
-export const parseJsonSafe = (body: string): Result => {
+export const safeParseJson = (body: string): Result => {
   try {
     return {
       success: true,

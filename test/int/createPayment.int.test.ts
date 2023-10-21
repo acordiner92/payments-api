@@ -17,7 +17,7 @@ describe('When the user creates a new payment', () => {
     const payment = await getPayment(paymentId);
 
     expect(statusCode).toBe(201);
-    expect(JSON.parse(body).result).toEqual(paymentId);
+    expect(JSON.parse(body).data.id).toEqual(paymentId);
     expect(payment).toStrictEqual({
       id: paymentId,
       currency: 'AUD',

@@ -10,5 +10,5 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
 
   const payment = await getPayment(id);
-  return payment ? buildResponse(200, { ...payment }) : buildResponse(404);
+  return payment ? buildResponse(200, payment) : buildResponse(404);
 };

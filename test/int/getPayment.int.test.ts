@@ -31,7 +31,7 @@ describe('When the user requests the records for a specific payment', () => {
 
     const payment = await getPayment(paymentId);
     expect(result.statusCode).toBe(200);
-    expect(JSON.parse(result.body)).toStrictEqual(payment);
+    expect(JSON.parse(result.body).data).toStrictEqual(payment);
   });
 
   it('a 400 is returned if no id is present in request', async () => {

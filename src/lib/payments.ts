@@ -1,16 +1,14 @@
-import { DocumentClient } from "./dynamodb";
-import { GetCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { DocumentClient } from './dynamodb';
+import { GetCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 
 export type CreatePaymentInput = {};
 
-export const getPayment = async (
-  paymentId: string
-): Promise<Payment | null> => {
+export const getPayment = async (paymentId: string): Promise<Payment | null> => {
   const result = await DocumentClient.send(
     new GetCommand({
-      TableName: "Payments",
+      TableName: 'Payments',
       Key: { id: paymentId },
-    })
+    }),
   );
 
   return (result.Item as Payment) ?? null;
@@ -19,14 +17,14 @@ export const getPayment = async (
 export const listPayments = async (currency?: string): Promise<Payment[]> => {
   const result = await DocumentClient.send(
     new ScanCommand({
-      TableName: "Payments",
+      TableName: 'Payments',
       ...(currency && {
-        FilterExpression: "currency = :currency",
+        FilterExpression: 'currency = :currency',
         ExpressionAttributeValues: {
-          ":currency": currency,
+          ':currency': currency,
         },
       }),
-    })
+    }),
   );
 
   return (result.Items ?? []) as Payment[];
@@ -35,9 +33,9 @@ export const listPayments = async (currency?: string): Promise<Payment[]> => {
 export const createPayment = async (payment: Payment): Promise<void> => {
   await DocumentClient.send(
     new PutCommand({
-      TableName: "Payments",
+      TableName: 'Payments',
       Item: payment,
-    })
+    }),
   );
 };
 

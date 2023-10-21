@@ -1,15 +1,12 @@
-import { APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyResult } from 'aws-lambda';
 
-export const buildResponse = (
-  statusCode: number,
-  body?: Object
-): APIGatewayProxyResult => {
+export const buildResponse = (statusCode: number, body?: Object): APIGatewayProxyResult => {
   return {
     statusCode,
-    body: body ? JSON.stringify(body) : "",
+    body: body ? JSON.stringify(body) : '',
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
     },
   };
 };

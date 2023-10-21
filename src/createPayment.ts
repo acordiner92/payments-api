@@ -1,19 +1,17 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { buildResponse, parseInput } from "./lib/apigateway";
-import { createPayment } from "./lib/payments";
-import { randomUUID } from "crypto";
-import { z } from "zod";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { buildResponse, parseInput } from './lib/apigateway';
+import { createPayment } from './lib/payments';
+import { randomUUID } from 'crypto';
+import { z } from 'zod';
 
 const PaymentRequest = z.object({
   amount: z.number().positive(),
   currency: z.string(),
 });
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const paymentId = randomUUID();
-  const result = PaymentRequest.safeParse(parseInput(event.body || "{}"));
+  const result = PaymentRequest.safeParse(parseInput(event.body || '{}'));
 
   if (!result.success) {
     return buildResponse(422);

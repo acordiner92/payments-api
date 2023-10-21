@@ -1,14 +1,12 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { getPayment } from "./lib/payments";
-import { buildResponse } from "./lib/apigateway";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { getPayment } from './lib/payments';
+import { buildResponse } from './lib/apigateway';
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const id = event.pathParameters?.id;
 
   if (!id) {
-    throw Error("TODO: handle this case");
+    throw Error('TODO: handle this case');
   }
 
   const payment = await getPayment(id);

@@ -1,9 +1,9 @@
 export default {
-  testEnvironment: "node",
-  roots: ["<rootDir>/test"],
-  testMatch: ["**/*.int.test.ts"],
-  setupFilesAfterEnv: ["<rootDir>/test/int/setup.ts"],
+  testEnvironment: 'node',
+  roots: ['<rootDir>/test'],
+  testMatch: ['**/*.int.test.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/int/setup.ts'],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    '^.+\\.tsx?$': 'ts-jest',
   },
 };

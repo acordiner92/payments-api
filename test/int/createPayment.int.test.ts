@@ -1,15 +1,15 @@
-import * as crypto from "crypto";
-import createEvent from "mock-aws-events";
-import { handler } from "../../src/createPayment";
-import { getPayment } from "../../src/lib/payments";
+import * as crypto from 'crypto';
+import createEvent from 'mock-aws-events';
+import { handler } from '../../src/createPayment';
+import { getPayment } from '../../src/lib/payments';
 
-describe("When the user creates a new payment", () => {
-  it("a new payment is created in the db", async () => {
+describe('When the user creates a new payment', () => {
+  it('a new payment is created in the db', async () => {
     const paymentId = crypto.randomUUID();
-    jest.spyOn(crypto, "randomUUID").mockReturnValue(paymentId);
+    jest.spyOn(crypto, 'randomUUID').mockReturnValue(paymentId);
 
-    const event = createEvent("aws:apiGateway", {
-      body: JSON.stringify({ currency: "AUD", amount: 2000 }),
+    const event = createEvent('aws:apiGateway', {
+      body: JSON.stringify({ currency: 'AUD', amount: 2000 }),
     });
 
     const { statusCode, body } = await handler(event);
@@ -20,7 +20,7 @@ describe("When the user creates a new payment", () => {
     expect(JSON.parse(body).result).toEqual(paymentId);
     expect(payment).toStrictEqual({
       id: paymentId,
-      currency: "AUD",
+      currency: 'AUD',
       amount: 2000,
     });
   });

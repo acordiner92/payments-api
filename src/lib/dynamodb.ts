@@ -1,19 +1,19 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 
 const DEFAULT_PARAMS = {
-  region: process.env.AWS_REGION || "ap-southeast-2",
+  region: process.env.AWS_REGION || 'ap-southeast-2',
 };
 
-const isTest = (process.env.NODE_ENV || "").toLowerCase() === "test";
+const isTest = (process.env.NODE_ENV || '').toLowerCase() === 'test';
 
 const testConfig = {
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY || "fakekey",
-    secretAccessKey: process.env.AWS_SECRET_KEY || "secretkey",
+    accessKeyId: process.env.AWS_ACCESS_KEY || 'fakekey',
+    secretAccessKey: process.env.AWS_SECRET_KEY || 'secretkey',
   },
-  endpoint: "http://localhost:8000",
-  region: process.env.AWS_REGION || "local",
+  endpoint: 'http://localhost:8000',
+  region: process.env.AWS_REGION || 'local',
   sslEnabled: false,
 };
 

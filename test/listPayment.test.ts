@@ -4,7 +4,7 @@ import { handler } from "../src/listPayments";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 describe("When the user requests for a list of payments", () => {
-  it("Returns all payments if no query parameters are returned", async () => {
+  it("All payments are returned if no query parameters are provided", async () => {
     const mockPayments = [
       {
         id: randomUUID(),

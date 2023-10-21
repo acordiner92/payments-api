@@ -11,6 +11,7 @@ const PaymentRequest = z.object({
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const paymentId = randomUUID();
+  // TODO: fix up parseInput
   const result = PaymentRequest.safeParse(parseInput(event.body || '{}'));
 
   if (!result.success) {

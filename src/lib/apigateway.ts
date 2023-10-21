@@ -1,6 +1,9 @@
 import { APIGatewayProxyResult } from 'aws-lambda';
 
-export const buildResponse = (statusCode: number, body?: Object): APIGatewayProxyResult => {
+export const buildResponse = (
+  statusCode: number,
+  body?: Record<string, unknown>,
+): APIGatewayProxyResult => {
   return {
     statusCode,
     body: body ? JSON.stringify(body) : '',
@@ -11,7 +14,7 @@ export const buildResponse = (statusCode: number, body?: Object): APIGatewayProx
   };
 };
 
-export const parseInput = (body: string): Object => {
+export const parseInput = (body: string): Unknown => {
   try {
     return JSON.parse(body);
   } catch (err) {

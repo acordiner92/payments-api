@@ -1,8 +1,6 @@
 import { DocumentClient } from './dynamodb';
 import { GetCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 
-export type CreatePaymentInput = {};
-
 export const getPayment = async (paymentId: string): Promise<Payment | null> => {
   const result = await DocumentClient.send(
     new GetCommand({

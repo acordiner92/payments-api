@@ -1,5 +1,6 @@
 import { DocumentClient } from './dynamodb';
 import { GetCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { buildQuery, PaymentsQueryInput } from './paymentsQueryBuilder';
 
 export const getPayment = async (paymentId: string): Promise<Payment | null> => {
   const result = await DocumentClient.send(
@@ -12,16 +13,11 @@ export const getPayment = async (paymentId: string): Promise<Payment | null> => 
   return (result.Item as Payment) ?? null;
 };
 
-export const listPayments = async (currency?: string): Promise<Payment[]> => {
+export const listPayments = async (queryInput: PaymentsQueryInput): Promise<Payment[]> => {
   const result = await DocumentClient.send(
     new ScanCommand({
       TableName: 'Payments',
-      ...(currency && {
-        FilterExpression: 'currency = :currency',
-        ExpressionAttributeValues: {
-          ':currency': currency,
-        },
-      }),
+      ...buildQuery(queryInput),
     }),
   );
 

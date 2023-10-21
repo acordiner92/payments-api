@@ -32,7 +32,7 @@ describe('When the user requests for a list of payments', () => {
     expect(result.statusCode).toBe(200);
     expect(JSON.parse(result.body).data).toStrictEqual(mockPayments);
 
-    expect(listPaymentMock).toHaveBeenCalledWith(undefined);
+    expect(listPaymentMock).toHaveBeenCalledWith({ currency: undefined });
   });
 
   it('Returns only SGD currency payments if user requests SGD', async () => {
@@ -63,6 +63,6 @@ describe('When the user requests for a list of payments', () => {
     expect(result.statusCode).toBe(200);
     expect(JSON.parse(result.body).data).toStrictEqual([mockPayments[0]]);
 
-    expect(listPaymentMock).toHaveBeenCalledWith('SGD');
+    expect(listPaymentMock).toHaveBeenCalledWith({ currency: 'SGD' });
   });
 });

@@ -1,3 +1,6 @@
+import { compilerOptions } from './tsconfig.json';
+import { pathsToModuleNameMapper } from 'ts-jest';
+
 export default {
   testEnvironment: 'node',
   roots: ['<rootDir>/test'],
@@ -5,4 +8,6 @@ export default {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+  modulePaths: ['<rootDir>'],
 };

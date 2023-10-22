@@ -19,9 +19,9 @@ To solve this issue, I updated them all to be `id`.
 - Currently, the error responses only return the status code which isn't ideal for the consumer of the API, because they are not aware of the specifics of why its erroring out. To address this problem, we can add an error response in the body for any non-200 statuses, to provide a more comprehensive response to the consumer so they know how to address the error. An example error response might look something like:
 ```json
 {
-    error: {
-        reasonCode: "NON_POSITIVE_AMOUNT",
-        description: "Payment amount needs to have more than 0 dollars"
+    "error": {
+        "reasonCode": "NON_POSITIVE_AMOUNT",
+        "description": "Payment amount needs to have more than 0 dollars"
     }
 }
 ```

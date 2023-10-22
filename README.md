@@ -27,7 +27,7 @@ To solve this issue, I updated them all to be `id`.
 ```
 - In the `dynamodb.ts` file we have several references to environment variables. In this case, I would consolidate all the `process.env.XXXXX` variables into a config file and use the config in any file that requires the environment variables. The benefit of this is it's easier to refactor down the track if you need to update any of the variables and it's also easy to find out what variables are required when setting up the infrastructure in the cloud.
 - Alongside the config file I would probably remove the default config values, manage the variables locally via `dotenv` and throw when an env var is missing. The removal of default config values minimizes the risk of having a scenario where an env var was accidentally missed when setting up the infrastructure and the default value is used, potentially causing issues down the road. My philosophy is when things fail, we want it to fail as fast as possible, so we can address it ASAP. 
-
+- Adding a global error handler to wrap the lambda function to catch any uncaught errors and allows us to be able control the response back to the API consumer.
 
 ## Requirements
 - Node 18 or higher

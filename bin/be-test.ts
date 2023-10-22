@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { BeTestStack } from 'lib/be-test-stack';
+import { BeTestStack } from '../lib/be-test-stack';
 
 const app = new cdk.App();
 new BeTestStack(app, 'BeTestStack', {

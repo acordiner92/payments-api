@@ -11,6 +11,7 @@ Upon completion of this backend coding test, there were a few assumptions I made
     // the Payment id field here will be undefined
 ```
 To solve this issue, I updated them all to be `id`.
+- With the existing endpoints, I noticed the response objects varied slightly in format. For example payment list endpoint returned `{ data: [......] }` where as created endpoint returned `{ result: { ..... }}`. To make it consistent across all endpoints, I decided to update them all to return inside the `data` attribute.  
 
 ## Potential Improvements
 - To improve logging readability and traceability, I would add in a trace token generation via Node's `async_hooks` and inject it into the logs. This means if we have any issues, it's easier to query the logs via the trace token to get the full understanding of a specific request.   
